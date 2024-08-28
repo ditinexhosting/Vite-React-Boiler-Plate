@@ -4,43 +4,23 @@
  * This is the navigation file that takes care of all router
  */
 
-import loader from 'assets/images/loader.gif';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { ErrorBoundary } from 'src/components';
-import Pages from 'src/pages';
-import { loadSessionFromLocal } from 'src/redux/action';
+//import { ErrorBoundary } from 'src/components';
+import * as Pages from 'src/pages';
 
 const Navigation = () => {
-  const { isLoading } = useSelector((state) => state.session);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // This use Effect is only used to load localstorage data into redux on page reload.
-    dispatch(
-      loadSessionFromLocal(
-        localStorage.getItem('userSession') ? JSON.parse(localStorage.getItem('userSession')) : ''
-      )
-    );
-  }, []);
-
   return (
     <BrowserRouter>
-      {isLoading && (
-        <div className="preloader">
-          <img src={loader} className="w-60" />
-        </div>
-      )}
       <Routes>
-        <Route path="/" errorElement={<ErrorBoundary />}>
+        <Route path="/">
           <Route index element={<Pages.Login />} />
           {/* ALL RESTRICTED ROUTES */}
           <Route
             path="/dashboard"
             element={
               <RequireAuth permission={'view_dashboard'}>
-                <PortalDashboard.Dashboard />
+                <Pages.Login />
               </RequireAuth>
             }
           />

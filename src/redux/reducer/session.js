@@ -1,8 +1,13 @@
+/**
+ * @version 0.0.1
+ * Updated On : August 28, 2024
+ * Create session reducer of Redux
+ */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   userSession: null,
-  isLoading: false
+  isLoading: true
 };
 
 const sessionData = createSlice({
@@ -26,6 +31,7 @@ const sessionData = createSlice({
     },
     loadSessionFromLocal: (state, action) => {
       state.userSession = action.payload;
+      state.isLoading = false;
     }
   }
 });

@@ -4,21 +4,41 @@
  * This is a wrapper element on the root component.
  * It handles all additional work and states needed before initializing root component.
  */
-//import { useErrorLog } from '@src/hooks';
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Provider } from 'react-redux';
-import store from 'src/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from 'src/components';
+import { useErrorLog } from 'src/hooks';
+import { loadSessionFromLocal } from 'src/redux/action';
 
 const Wrapper = ({ children }) => {
-  //const handleError = useErrorLog('lib/Wrapper/ErrorBoundary');
+  //-------------- State & Variables --------------//
+  const handleError = useErrorLog('lib/Wrapper');
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.session);
 
-  const errorHandler = (e) => {
-    /* Log the error to an error reporting service */
-    //handleError(e);
-  };
+  //-------------- Use Effects --------------//
+
+  /**
+   * This use Effect is only used to load localstorage data into redux on page reload.
+   */
+  useEffect(() => {
+    try {
+      dispatch(
+        loadSessionFromLocal(
+          localStorage.getItem('userSession') ? JSON.parse(localStorage.getItem('userSession')) : ''
+        )
+      );
+    } catch (e) {
+      handleError(e);
+    }
+  }, []);
+
+  //-------------- Other Methods --------------//
 
   return (
-    <Provider store={store}>
+    <>
+      {isLoading && <Loader />}
       {children}
       <Toaster
         position="bottom-center"
@@ -32,7 +52,7 @@ const Wrapper = ({ children }) => {
           duration: 5000
         }}
       />
-    </Provider>
+    </>
   );
 };
 

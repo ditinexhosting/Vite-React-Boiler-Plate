@@ -6,10 +6,17 @@
 import { useEffect, useState } from 'react';
 
 export const useErrorLog = (fileLocation) => {
+  //-------------- State & Variables --------------//
+
   const [file, setFile] = useState('');
+
+  //-------------- Use Effects --------------//
+
   useEffect(() => {
     setFile(fileLocation);
   }, [fileLocation]);
+
+  //-------------- Other Methods --------------//
 
   /**
    * Console the error in PM2 log
