@@ -6,7 +6,6 @@
 
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
-//import { ErrorBoundary } from 'src/components';
 import * as Pages from 'src/pages';
 
 const Navigation = () => {

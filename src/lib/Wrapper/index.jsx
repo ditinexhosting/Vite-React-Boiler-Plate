@@ -15,7 +15,7 @@ const Wrapper = ({ children }) => {
   //-------------- State & Variables --------------//
   const handleError = useErrorLog('lib/Wrapper');
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.session);
+  const { isLoading, userSession } = useSelector((state) => state.session);
 
   //-------------- Use Effects --------------//
 
@@ -35,6 +35,9 @@ const Wrapper = ({ children }) => {
   }, []);
 
   //-------------- Other Methods --------------//
+
+  if (userSession == null)
+    return <Loader />
 
   return (
     <>
