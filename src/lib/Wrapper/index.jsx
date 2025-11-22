@@ -1,61 +1,64 @@
 /**
  * @version 0.0.1
- * Updated On : August 28, 2024
+ * Updated On : December 7, 2024
  * This is a wrapper element on the root component.
  * It handles all additional work and states needed before initializing root component.
  */
-import { useEffect } from 'react';
+import { Alert, App, ConfigProvider, theme } from 'antd';
+import enUS from 'antd/locale/en_US';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
 import { Toaster } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Loader } from 'src/components';
-import { useErrorLog } from 'src/hooks';
-import { loadSessionFromLocal } from 'src/redux/action';
+import { useTheme } from 'src/hooks';
+import Navigation from 'src/navigation';
+import { ANTD_THEME_DARK, ANTD_THEME_LIGHT, THEMES } from 'src/utils';
+const { ErrorBoundary } = Alert;
+const { darkAlgorithm, defaultAlgorithm } = theme;
+dayjs.locale('en');
 
+// eslint-disable-next-line react/prop-types
 const Wrapper = ({ children }) => {
   //-------------- State & Variables --------------//
-  const handleError = useErrorLog('lib/Wrapper');
-  const dispatch = useDispatch();
-  const { isLoading, userSession } = useSelector((state) => state.session);
+
+  const { isLoading } = useSelector((state) => state.session);
+
+  const [themeMode] = useTheme();
 
   //-------------- Use Effects --------------//
 
-  /**
-   * This use Effect is only used to load localstorage data into redux on page reload.
-   */
-  useEffect(() => {
-    try {
-      dispatch(
-        loadSessionFromLocal(
-          localStorage.getItem('userSession') ? JSON.parse(localStorage.getItem('userSession')) : ''
-        )
-      );
-    } catch (e) {
-      handleError(e);
-    }
-  }, []);
-
   //-------------- Other Methods --------------//
 
-  if (userSession == null)
-    return <Loader />
+  const antd_theme = themeMode == THEMES.DARK ? ANTD_THEME_DARK : ANTD_THEME_LIGHT;
 
   return (
-    <>
-      {isLoading && <Loader />}
-      {children}
-      <Toaster
-        position="bottom-center"
-        reverseOrder={false}
-        gutter={8}
-        containerClassName=""
-        containerStyle={{}}
-        toastOptions={{
-          // Define default options
-          className: '',
-          duration: 5000
-        }}
-      />
-    </>
+    <ConfigProvider
+      theme={{
+        algorithm: themeMode == THEMES.DARK ? darkAlgorithm : defaultAlgorithm,
+        ...antd_theme
+      }}
+      locale={enUS}
+    >
+      <App>
+        <ErrorBoundary>
+          <Navigation />
+          {children}
+        </ErrorBoundary>
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{}}
+          toastOptions={{
+            className: '',
+            duration: 5000
+          }}
+        />
+        {isLoading == 'screen' && <Loader />}
+      </App>
+    </ConfigProvider>
   );
 };
 

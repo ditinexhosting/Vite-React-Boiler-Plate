@@ -3,10 +3,9 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      src: '/src'
-    }
-  }
+  plugins: [react(), tailwindcss()],
+  optimizeDeps: { force: true },
+  build: { outDir: 'dist' },
+  resolve: { alias: { src: '/src' } },
+  server: { allowedHosts: ['*'] }
 });

@@ -9,6 +9,15 @@
 - Use react-hot-toast to show toast messages
 - Use lucid icons for icons
 
+## Naming Convention
+
+- Function Name -> camelCase
+- Variables -> snake_case
+- API Call->TitleCase
+- useState Varibale -> count,setCount
+- Constant -> CAPITAL_LETTER
+- Component name -> TitleCase
+
 ## Folder Structure
 
 - Add all image, assets, json files to _assets_ folder.

@@ -4,34 +4,31 @@
  * Create session reducer of Redux
  */
 import { createSlice } from '@reduxjs/toolkit';
+import { THEMES } from 'src/utils';
+import { CONFIG } from 'src/config';
 
-const initialState = {
-  userSession: null,
-  isLoading: true
-};
+const initialState = { userSession: null, isLoading: false, themeMode: THEMES.LIGHT };
 
 const sessionData = createSlice({
   name: 'session',
   initialState: initialState,
   reducers: {
-    loadingStart: (state) => {
-      state.isLoading = true;
+    loadingStart: (state, action) => {
+      state.isLoading = action.payload || 'screen';
     },
     loadingStop: (state) => {
       state.isLoading = false;
     },
     login: (state, action) => {
       state.userSession = action.payload;
-      localStorage.setItem('userSession', JSON.stringify(action.payload));
+    },
+    setThemeMode: (state, action) => {
+      state.themeMode = action.payload;
     },
     logout: (state) => {
       state.userSession = null;
-      localStorage.removeItem('userSession');
+      localStorage.removeItem(`persist:${CONFIG.LOCAL_STORAGE_KEY}`);
       localStorage.clear();
-    },
-    loadSessionFromLocal: (state, action) => {
-      state.userSession = action.payload;
-      state.isLoading = false;
     }
   }
 });
