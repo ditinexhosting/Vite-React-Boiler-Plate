@@ -4,7 +4,7 @@
  * This is a wrapper element on the root component.
  * It handles all additional work and states needed before initializing root component.
  */
-import { Alert, App, ConfigProvider, theme } from 'antd';
+import { Alert, ConfigProvider, theme } from 'antd';
 import enUS from 'antd/locale/en_US';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en';
@@ -33,14 +33,15 @@ const Wrapper = ({ children }) => {
   const antd_theme = themeMode == THEMES.DARK ? ANTD_THEME_DARK : ANTD_THEME_LIGHT;
 
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: themeMode == THEMES.DARK ? darkAlgorithm : defaultAlgorithm,
-        ...antd_theme
-      }}
-      locale={enUS}
-    >
-      <App>
+    <>
+      <ConfigProvider
+        theme={{
+          algorithm: themeMode == THEMES.DARK ? darkAlgorithm : defaultAlgorithm,
+          ...antd_theme
+        }}
+        locale={enUS}
+        direction="ltr"
+      >
         <ErrorBoundary>
           <Navigation />
           {children}
@@ -57,8 +58,8 @@ const Wrapper = ({ children }) => {
           }}
         />
         {isLoading == 'screen' && <Loader />}
-      </App>
-    </ConfigProvider>
+      </ConfigProvider >
+    </>
   );
 };
 

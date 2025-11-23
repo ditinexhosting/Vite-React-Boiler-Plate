@@ -24,11 +24,11 @@ export const useErrorLog = (fileLocation) => {
    */
   const handleError = (error) => {
     const errorLogString = `Date: ${new Date()} \nFile: ${file} \nError: ${error.message}`;
-    console.log('------------------------');
-    console.log(errorLogString);
-    console.log('**** Stack Trace ****');
-    console.log(error.stack);
-    console.log('------------------------');
+    console.error('------------------------');
+    console.error(errorLogString);
+    console.error('**** Stack Trace ****');
+    console.error(error.stack);
+    console.error('------------------------');
   };
 
   return handleError;

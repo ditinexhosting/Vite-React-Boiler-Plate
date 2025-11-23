@@ -8,9 +8,14 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { CONFIG } from 'src/config';
 import session from 'src/redux/reducer/session';
+import theme from 'src/redux/reducer/theme';
 
-const combined_reducer = combineReducers({ session });
-const persist_config = { key: CONFIG.LOCAL_STORAGE_KEY, blacklist: ['permission'], storage };
+const combined_reducer = combineReducers({ session, theme });
+const persist_config = {
+  key: CONFIG.LOCAL_STORAGE_KEY,
+  blacklist: ['permission', 'theme'],
+  storage
+};
 const persisted_reducer = persistReducer(persist_config, combined_reducer);
 
 const store = configureStore({

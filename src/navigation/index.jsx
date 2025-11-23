@@ -18,7 +18,7 @@ const Navigation = () => {
           <Route
             path="/dashboard"
             element={
-              <RequireAuth permission={'view_dashboard'}>
+              <RequireAuth permission={[]}>
                 <Pages.Login />
               </RequireAuth>
             }

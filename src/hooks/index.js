@@ -6,3 +6,5 @@
  */
 
 export * from './useErrorLog';
+export * from './useTheme';
+export * from './useWindowDimensions';

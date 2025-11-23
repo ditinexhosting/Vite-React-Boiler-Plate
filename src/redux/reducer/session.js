@@ -4,10 +4,9 @@
  * Create session reducer of Redux
  */
 import { createSlice } from '@reduxjs/toolkit';
-import { THEMES } from 'src/utils';
 import { CONFIG } from 'src/config';
 
-const initialState = { userSession: null, isLoading: false, themeMode: THEMES.LIGHT };
+const initialState = { userSession: null, isLoading: false };
 
 const sessionData = createSlice({
   name: 'session',
@@ -21,9 +20,6 @@ const sessionData = createSlice({
     },
     login: (state, action) => {
       state.userSession = action.payload;
-    },
-    setThemeMode: (state, action) => {
-      state.themeMode = action.payload;
     },
     logout: (state) => {
       state.userSession = null;
