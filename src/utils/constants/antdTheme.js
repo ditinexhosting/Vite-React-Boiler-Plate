@@ -5,13 +5,13 @@
  */
 
 export const ANTD_THEME_LIGHT = {
-  token: { controlHeight: 40, colorPrimary: '#ED9E2C' },
-  components: { Layout: { headerBg: 'transparent', siderBg: '#FFF', bodyBg: '#23292F' } }
+  token: { controlHeight: 40, colorPrimary: "#667eea" },
+  components: { Layout: { headerBg: "transparent", siderBg: "#FFF", bodyBg: "#FAFAFA" } }
 };
 
 export const ANTD_THEME_DARK = {
-  token: { controlHeight: 40 },
-  components: { Layout: { headerBg: 'transparent', siderBg: '#FF0000' } }
+  token: { controlHeight: 40, colorPrimary: "#ED9E2C" },
+  components: { Layout: { headerBg: "transparent", siderBg: "#FFF", bodyBg: "#23292F" } }
 };
 
-export const THEMES = { LIGHT: 'light', DARK: 'dark', SYSTEM: 'system' };
+export const THEMES = { LIGHT: "light", DARK: "dark", SYSTEM: "system" };

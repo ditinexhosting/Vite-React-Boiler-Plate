@@ -3,7 +3,7 @@
  * Updated On : August 28, 2024
  * Fallback component if there is any error exception in UI
  */
-import { useRouteError } from 'react-router-dom';
+import { useRouteError } from 'react-router';
 
 export const ErrorBoundary = () => {
   //-------------- State & Variables --------------//

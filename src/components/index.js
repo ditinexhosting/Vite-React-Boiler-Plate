@@ -5,5 +5,7 @@
  * And export them from index so that it can be imported from src/components directly
  */
 
-export * from './ErrorBoundary';
-export * from './Loader';
+export * from "./ErrorBoundary";
+export * from "./Loader";
+export * from "./DashboardContainer";
+export * from "./Icons";

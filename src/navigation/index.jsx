@@ -5,26 +5,38 @@
  */
 
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate, Outlet, BrowserRouter, Routes, Route } from "react-router";
+import { DashboardContainer } from 'src/components';
 import * as Pages from 'src/pages';
 
 const Navigation = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
-          <Route index element={<Pages.Login />} />
-          {/* ALL RESTRICTED ROUTES */}
+        <Route index element={<Pages.Login />} />
+        {/* ALL RESTRICTED ROUTES */}
+        <Route
+          path="dashboard"
+          element={
+            <DashboardContainer />
+          }
+        >
           <Route
-            path="/dashboard"
+            index
+            element={
+              <Pages.Dashboard />
+            }
+          />
+          <Route
+            path="settings"
             element={
               <RequireAuth permission={[]}>
-                <Pages.Login />
+                <Pages.Dashboard />
               </RequireAuth>
             }
           />
-          <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
@@ -40,17 +52,11 @@ const Forbidden = () => {
 
 const RequireAuth = ({ permission, ...props }) => {
   const location = useLocation();
+  let navigate = useNavigate();
   const { userSession } = useSelector((state) => state.session);
 
   if (userSession == null)
-    // Still loading data from localstorage
-    return (
-      <div className="preloader">
-        <img src={loader} className="w-60" />
-      </div>
-    );
-  else if (userSession == '')
-    // Localstorage loaded but no user session found. Redirect to login page.
+    // Redux persist loaded but no user session found. Redirect to login page.
     return <Navigate to="/" state={{ from: location }} />;
   else if (!userSession?.permissions.includes(permission))
     // User don't have access

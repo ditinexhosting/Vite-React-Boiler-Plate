@@ -3,9 +3,12 @@
  * Updated On : August 28, 2024
  * Create action for Redux
  */
-import { sessionActions } from 'src/redux/reducer/session';
-import { themeActions } from 'src/redux/reducer/theme';
+import { sessionActions } from "src/redux/reducer/session";
+import { themeActions } from "src/redux/reducer/theme";
+import { languageActions } from "src/redux/reducer/language";
 // Actions from SessionReducer
 export const { loadingStart, loadingStop, login, logout } = sessionActions;
 // Actions from ThemeReducer
 export const { setThemeMode } = themeActions;
+// Actions from LanguageReducer
+export const { setLanguage } = languageActions;

@@ -1,7 +1,42 @@
-[data-theme='light'] {
-  /* --ant-layout-header-bg: transparent; */
+/** Overwrite Lucide Icons Design **/
+.lucide {
+  stroke-width: 2px;
+  width: 18px;
+  height: 18px;
 }
 
-[data-theme='dark'] {
-  /* --ant-layout-header-bg: transparent; */
+/** Overwrite Antds **/
+.ant-segmented-item-label {
+  align-items: center;
+  display: flex;
+}
+
+/** Custom Class **/
+
+.box-shadow-input {
+  box-shadow:
+    0 4px 4px 0 rgba(0, 0, 0, 0.15),
+    0 5px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-box-shadow {
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button-box-shadow {
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.35);
+}
+
+.dark-bg {
+  color: #ed9e2c;
+  border: 1px solid #ed9e2c;
+}
+.light-bg {
+  color: #cb791f;
+  border: 1px solid #cb791f;
+}
+.theme-background {
+  background: var(--theme-background);
 }

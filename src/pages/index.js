@@ -7,3 +7,4 @@
  * And export them from index so that it can be imported directly
  */
 export * from './Login';
+export * from './Dashboard';

@@ -4,4 +4,5 @@
  * Constants here
  */
 
-export * from './antdTheme';
+export * from "./antdTheme";
+export * from "./routes";

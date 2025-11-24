@@ -1,63 +1,94 @@
 /**
  * @version 0.0.1
- * Updated On : Aug 28, 2024
+ * Updated On : Nov 24, 2025
  * This is the Login page.
  */
+import { Button, Segmented } from "antd";
+import { loadingStart, loadingStop, setLanguage } from "@/redux/action";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
 
-import {
-  Button,
-  ColorPicker,
-  ConfigProvider,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Space,
-  Switch,
-  Layout,
-  Breadcrumb
-} from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
-import { useDispatch, useSelector } from 'react-redux';
-import { useTheme } from 'src/hooks';
-import { setThemeMode } from 'src/redux/action';
-import { THEMES } from 'src/utils';
+//import components and hooks
+import { GoogleIcon } from "src/components";
+import { LANGUAGES, ROUTES } from "src/utils";
 
 export const Login = () => {
-  const [themeMode, changeTheme] = useTheme()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { userSession, isLoading } = useSelector((state) => state.session);
+  const { transcript, activeLanguage } = useSelector((state) => state.language);
 
+  // Redirect if authenticated
+  useEffect(() => {
+    // if (userSession?.access_token) navigate(ROUTES.HOME, { replace: true });
+  }, [location.pathname, userSession]);
 
-  return <div>
-    <Layout>
-      <Header>Header</Header>
-      <Layout>
-        <Sider width="25%">
-          Sider
-        </Sider>
-        <Layout>
-          <Breadcrumb
-            items={[{ title: 'Home' }, { title: 'List' }, { title: 'App' }]}
-            style={{ margin: '16px 0' }}
+  // Google OAuth
+  const onGoogleAuth = () => {
+    dispatch(loadingStart("login-google-icon"));
+    setTimeout(() => {
+      dispatch(loadingStop());
+      navigate(ROUTES.DASHBOARD_HOME, { replace: true });
+    }, 3000);
+  };
+
+  const onChangeLanguage = (lang) => {
+    dispatch(setLanguage(lang));
+  };
+
+  return (
+    <div className="min-h-screen theme-background relative flex justify-center items-center">
+      {/* Center Login Box */}
+      <motion.div
+        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+        className="flex flex-col bg-bodyBg card-box-shadow rounded-3xl p-4"
+      >
+        <div className="flex flex-row justify-end pb-4 gap-4">
+          <Segmented
+            options={Object.keys(LANGUAGES)}
+            value={activeLanguage}
+            onChange={onChangeLanguage}
           />
-          <Content>
-            <Space>
-              <Input />
-              <Button type="primary">Button</Button>
-            </Space>
-          </Content>
-          <Footer>Footer</Footer>
-        </Layout>
-      </Layout>
-    </Layout>
-    <p>Antd Theme Code sample</p>
-    <div>
-      <h2>Switch Dark / Light theme</h2>
-      <Space vertical>
-        <Switch checkedChildren="Dark" unCheckedChildren="Light" value={themeMode == THEMES.DARK} onChange={(e) => {
-          changeTheme(e == true ? THEMES.DARK : THEMES.LIGHT)
-        }} />
-      </Space>
+        </div>
+        <h1 className="py-4 text-center text-2xl font-bold text-black dark:text-white">
+          {transcript.login.title}
+        </h1>
+        <div className="text-center text-secondary max-w-2xs self-center py-4">
+          {transcript.login.subtitle}
+        </div>
+        <div className="space-y-3">
+          <Button
+            ghost={true}
+            variant="outline"
+            onClick={onGoogleAuth}
+            className="w-full h-12 text-base font-medium text-primary! hover:text-primary/50! rounded-full transition-all duration-200 shadow-sm border-primary! hover:border-primary/50!"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <GoogleIcon />
+            )}
+            {transcript.login.google_login_button}
+          </Button>
+          <p className="text-muted font-medium text-[8px] text-center self-center max-w-2xs">
+            {transcript.login.footer[0]}{" "}
+            <a href="" className="text-primary! hover:text-primary/80!">
+              {transcript.login.footer[1]}
+            </a>{" "}
+            {transcript.login.footer[2]}{" "}
+            <a href="" className="text-primary! hover:text-primary/80!">
+              {transcript.login.footer[3]}
+            </a>
+            .
+          </p>
+        </div>
+      </motion.div>
     </div>
-
-  </div>;
+  );
 };
