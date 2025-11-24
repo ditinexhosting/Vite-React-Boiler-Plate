@@ -3,8 +3,6 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-/* @custom-variant rtl (&:dir(rtl));
-@custom-variant ltr (&:dir(ltr)); */
 
 @theme {
   --color-bodyBg: #e8edef;
@@ -12,12 +10,28 @@
   --color-secondary: #5f5f5f;
   --color-muted: #9d9d9f;
   --theme-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --color-sidebar-collapse-icon: #ccd0ce;
+  --color-sidebar-bg: #f5f5f5;
+  --color-sidebar-footer: rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="dark"] {
   --color-bodyBg: #23292f;
-  --color-primary: #ed9e2c;
+  --color-primary: #cb791f;
   --color-secondary: #b3b3b4;
   --color-muted: #9d9d9f;
-  --theme-background: linear-gradient(135deg, #f9d0a2 0%, #e89b19 100%);
+  --theme-background: linear-gradient(135deg, #cb791f 0%, #f9d0a2 100%);
+  --color-sidebar-collapse-icon: #ccd0ce;
+  --color-sidebar-bg: #f5f5f5;
+  --color-sidebar-footer: rgba(0, 0, 0, 0.06);
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -19,20 +19,29 @@ import {
   Image,
   Tooltip,
   Radio,
-  Segmented
+  Segmented,
+  Badge
 } from "antd";
+const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "src/hooks";
-import { THEMES } from "src/utils";
+import { LANGUAGES, THEMES } from "src/utils";
 import { Outlet } from "react-router";
-import { Moon, Sun } from "lucide-react";
+import { Bell, Moon, Sun } from "lucide-react";
+import { setLanguage } from "src/redux/action";
 
 export const HeaderComponent = () => {
   const [themeMode, changeTheme] = useTheme();
+  const dispatch = useDispatch();
+  const { transcript, activeLanguage } = useSelector((state) => state.language);
 
   const onToggleTheme = () => {
     changeTheme(themeMode == THEMES.DARK ? THEMES.LIGHT : THEMES.DARK);
+  };
+
+  const onChangeLanguage = (lang) => {
+    dispatch(setLanguage(lang));
   };
 
   return (
@@ -42,29 +51,34 @@ export const HeaderComponent = () => {
           height={40}
           width={110}
           alt="Luxe Defense Group"
-          src={`public/${themeMode == THEMES.DARK ? "dark-logo.png" : "light-logo.jpeg"}`}
+          src={`/${themeMode == THEMES.DARK ? "dark-logo.png" : "light-logo.jpeg"}`}
           preview={false}
         />
         <div className="flex flex-row items-center gap-3">
+          <Search placeholder="Search here ..." onSearch={() => {}} />
+          <div className="cursor-pointer mx-3 rounded-full flex justify-center items-center">
+            <Badge dot={true}>
+              <Bell size={20} />
+            </Badge>
+          </div>
           <div>
             <Tooltip title={`Change theme.`}>
               <Segmented
                 onChange={onToggleTheme}
                 size={"small"}
                 shape="round"
+                value={themeMode}
                 options={[
-                  { value: THEMES.DARK, icon: <Sun size={18} /> },
-                  { value: THEMES.LIGHT, icon: <Moon size={18} /> }
+                  { value: THEMES.LIGHT, icon: <Sun size={18} /> },
+                  { value: THEMES.DARK, icon: <Moon size={18} /> }
                 ]}
-                className={`${themeMode == THEMES.DARK ? "light-bg" : "dark-bg"}`}
               />
             </Tooltip>
           </div>
           <Segmented
-            options={["EN", "AR"]}
-            onChange={(value) => {
-              console.log(value); // string
-            }}
+            options={Object.keys(LANGUAGES)}
+            value={activeLanguage}
+            onChange={onChangeLanguage}
           />
         </div>
       </div>

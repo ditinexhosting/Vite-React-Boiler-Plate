@@ -24,34 +24,27 @@ import { THEMES } from "src/utils";
 import { Outlet } from "react-router";
 import { HeaderComponent } from "./Header";
 import { useState } from "react";
-import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
+import { CircleChevronLeft, CircleChevronRight, Sidebar } from "lucide-react";
+import { SidebarComponent } from "./Sidebar";
 
 export const DashboardContainer = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
   return (
-    <Layout className="min-h-screen! bg-amber-600">
+    <Layout className="h-screen!">
       <HeaderComponent />
       <Layout>
-        <Sider width="15%" trigger={null} collapsible collapsed={collapsed}>
-          Sider
-          <Button
-            type="text"
-            icon={collapsed ? <CircleChevronRight /> : <CircleChevronLeft />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{ fontSize: "16px", width: 64, height: 64 }}
-          />
-        </Sider>
-        <Layout className="p-3">
+        <SidebarComponent />
+        <Layout className="pl-3 !overflow-y-auto">
           <Breadcrumb
             items={[{ title: "Home" }, { title: "List" }, { title: "App" }]}
             style={{ margin: "16px 0" }}
           />
           <Content>
-            <Space>
-              <Input />
-              <Button type="primary">Button</Button>
-            </Space>
+            <div className="flex flex-col">
+              <Space>
+                <Input />
+                <Button type="primary">Button</Button>
+              </Space>
+            </div>
             <Outlet />
           </Content>
           <Footer>Footer</Footer>
