@@ -39,6 +39,8 @@
 .
 ├── ...
 ├── assets
+│   ├── fonts
+│   ├── icons
 │   ├── images
 │   ├── json
 ├── components
@@ -52,6 +54,8 @@
 │   ├── index
 │   ├── Wrapper
 ├── navigation
+│   ├── index
+│   ├── menus
 ├── pages
 │   ├── index
 │   ├── Login
@@ -59,8 +63,12 @@
 ├── services
 ├── styles
 │   ├── global.css
+│   ├── index.css
 │   ├── loader.css
 ├── utils
+│   ├── common
+│   ├── constants
+│   ├── language
 ├── App.jsx
 ├── main.jsx
 └── ...
@@ -104,7 +112,7 @@
 - Each component should use handleError hook :
 
 ```js
-const handleError = useErrorLog('lib/Wrapper');
+const handleError = useErrorLog("lib/Wrapper");
 ```
 
 - Each method should use try catch and pass catch error to handleError :
@@ -119,6 +127,7 @@ catch(e){
 ```
 
 - Break big page UI into small section and components.
+- Non reusable components goes inside `components` folder of same directory
 
 ## Contributing
 

@@ -7,3 +7,10 @@
 
 - [Recommended Libraries](https://ant.design/docs/react/recommendation)
 - [Guide to edit Antd theme](https://ant.design/theme-editor)
+
+### On Login
+
+- Store data in redux session except the permission.
+- Store list of permission in redux permission.
+- Load permission and other sensitive user data from server side on page reload inside the Authenticated Wrapper
+-

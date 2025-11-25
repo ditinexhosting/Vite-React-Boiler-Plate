@@ -5,5 +5,6 @@
  * And export them from index so that it can be imported directly
  */
 
-export * from './PermissibleUI';
-export * from './Wrapper';
+export * from "./PermissibleUI";
+export * from "./Wrapper";
+export * from "./AuthorizedWrapper";

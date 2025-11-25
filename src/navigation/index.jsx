@@ -4,12 +4,22 @@
  * This is the navigation file that takes care of all router
  */
 
-import { useSelector } from 'react-redux';
-import { useNavigate, useLocation, Navigate, Outlet, BrowserRouter, Routes, Route } from "react-router";
-import { DashboardContainer } from 'src/components';
-import * as Pages from 'src/pages';
+import { useSelector } from "react-redux";
+import {
+  useNavigate,
+  useLocation,
+  Navigate,
+  Outlet,
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router";
+import { DashboardContainer } from "src/components";
+import * as Pages from "src/pages";
 
 const Navigation = () => {
+  const { allowedPermissions } = useSelector((state) => state.permission);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -18,15 +28,13 @@ const Navigation = () => {
         <Route
           path="dashboard"
           element={
-            <DashboardContainer />
+            <DashboardContainer
+              allowedPermissions={allowedPermissions}
+              filterSidebarMenuByPermission={true}
+            />
           }
         >
-          <Route
-            index
-            element={
-              <Pages.Dashboard />
-            }
-          />
+          <Route index element={<Pages.Dashboard />} />
           <Route
             path="settings"
             element={
@@ -35,6 +43,7 @@ const Navigation = () => {
               </RequireAuth>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -61,7 +70,7 @@ const RequireAuth = ({ permission, ...props }) => {
   else if (!userSession?.permissions.includes(permission))
     // User don't have access
     return <Forbidden />;
-  else return props.children; // Session present and Localstorage loaded
+  else return props.children; // Session present
 };
 
 export default Navigation;

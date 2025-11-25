@@ -4,7 +4,8 @@
  * This is the Login page.
  */
 import { Button, Dropdown, Segmented } from "antd";
-import { loadingStart, loadingStop, setLanguage } from "@/redux/action";
+import { loadingStart, loadingStop, setLanguage, login, setPermission } from "@/redux/action";
+import * as actions from "@/redux/action";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +13,7 @@ import { useLocation, useNavigate } from "react-router";
 
 //import components and hooks
 import { GoogleIcon } from "src/components";
-import { LANGUAGES, ROUTES } from "src/utils";
+import { LANGUAGES, ROUTES, USER_PERMISSIONS } from "src/utils";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -31,7 +32,9 @@ export const Login = () => {
     dispatch(loadingStart("login-google-icon"));
     setTimeout(() => {
       dispatch(loadingStop());
-      navigate(ROUTES.DASHBOARD_HOME, { replace: true });
+      dispatch(login({ name: "Asif", email: "asifakramsk@gmail.com" }));
+      dispatch(setPermission(USER_PERMISSIONS));
+      navigate(ROUTES.TAB_DASHBOARD_HOME, { replace: true });
     }, 3000);
   };
 

@@ -4,8 +4,7 @@
  * Import and export apis from ./apis
  * Import it in component as API.Login()
  */
-import { AuthApi } from 'src/services/apis/auth';
+import { AuthApi } from "src/services/apis/auth";
+import { DashboardApi } from "src/services/apis/dashboard";
 
-export const API = {
-  ...AuthApi
-};
+export const API = { AUTH: AuthApi, DASHBOARD: DashboardApi };

@@ -10,8 +10,9 @@ import { CONFIG } from "src/config";
 import session from "src/redux/reducer/session";
 import theme from "src/redux/reducer/theme";
 import language from "src/redux/reducer/language";
+import permission from "src/redux/reducer/permission";
 
-const combined_reducer = combineReducers({ session, theme, language });
+const combined_reducer = combineReducers({ session, theme, language, permission });
 const persist_config = {
   key: CONFIG.LOCAL_STORAGE_KEY,
   blacklist: ["permission", "theme", "language"], // Ignore reducers to get stored in persists

@@ -6,9 +6,12 @@
 import { sessionActions } from "src/redux/reducer/session";
 import { themeActions } from "src/redux/reducer/theme";
 import { languageActions } from "src/redux/reducer/language";
+import { permissionActions } from "src/redux/reducer/permission";
 // Actions from SessionReducer
 export const { loadingStart, loadingStop, login, logout } = sessionActions;
 // Actions from ThemeReducer
 export const { setThemeMode } = themeActions;
 // Actions from LanguageReducer
 export const { setLanguage } = languageActions;
+// Actions from PermissionReducer
+export const { setPermission } = permissionActions;
