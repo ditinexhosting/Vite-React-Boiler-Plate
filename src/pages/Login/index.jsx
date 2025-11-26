@@ -33,7 +33,7 @@ export const Login = () => {
     setTimeout(() => {
       dispatch(loadingStop());
       dispatch(login({ name: "Asif", email: "asifakramsk@gmail.com" }));
-      dispatch(setPermission(USER_PERMISSIONS));
+      dispatch(setPermission(Object.values(USER_PERMISSIONS)));
       navigate(ROUTES.TAB_DASHBOARD_HOME, { replace: true });
     }, 3000);
   };

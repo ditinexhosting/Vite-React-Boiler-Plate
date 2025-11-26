@@ -16,9 +16,20 @@ import { useTheme } from "src/hooks";
 import Navigation from "src/navigation";
 import { loadingStop } from "src/redux/action";
 import { ANTD_THEME_DARK, ANTD_THEME_LIGHT, THEMES } from "src/utils";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { CONFIG } from "src/config";
 const { ErrorBoundary } = Alert;
 const { darkAlgorithm, defaultAlgorithm } = theme;
 dayjs.locale("en");
+
+const tanstackQueryClient = new QueryClient({});
 
 // eslint-disable-next-line react/prop-types
 const Wrapper = ({ children }) => {
@@ -31,9 +42,11 @@ const Wrapper = ({ children }) => {
 
   //-------------- Use Effects --------------//
 
-  /** Stop Loader on load */
+  /** Stop Loader on reload if redux persists has garbage infinite loading value */
   useEffect(() => {
-    dispatch(loadingStop());
+    setTimeout(() => {
+      if (isLoading) dispatch(loadingStop());
+    }, 3000);
   }, []);
 
   //-------------- Other Methods --------------//
@@ -51,10 +64,13 @@ const Wrapper = ({ children }) => {
         direction={isRTL ? "rtl" : "ltr"}
       >
         <ErrorBoundary>
-          <div dir={isRTL ? "rtl" : "ltr"}>
-            <Navigation />
-            {children}
-          </div>
+          <QueryClientProvider client={tanstackQueryClient}>
+            <div dir={isRTL ? "rtl" : "ltr"}>
+              <Navigation />
+              {children}
+            </div>
+            {CONFIG.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+          </QueryClientProvider>
         </ErrorBoundary>
         <Toaster
           position="bottom-center"

@@ -26,25 +26,28 @@ import { HeaderComponent } from "./Header";
 import { useState } from "react";
 import { CircleChevronLeft, CircleChevronRight, Sidebar } from "lucide-react";
 import { SidebarComponent } from "./Sidebar";
+import { AuthorizedWrapper } from "src/lib";
 
 export const DashboardContainer = (props) => {
   return (
-    <Layout className="h-screen!">
-      <HeaderComponent />
-      <Layout>
-        <SidebarComponent {...props} />
-        <Layout className="pl-3 rtl:pr-3 rtl:pl-0 !overflow-y-auto">
-          <Breadcrumb
-            items={[{ title: "Home" }, { title: "List" }, { title: "App" }]}
-            style={{ margin: "16px 0" }}
-          />
-          <Content>
-            <div className="flex flex-col"></div>
-            <Outlet />
-          </Content>
-          <Footer>Footer</Footer>
+    <AuthorizedWrapper>
+      <Layout className="h-screen!">
+        <HeaderComponent />
+        <Layout>
+          <SidebarComponent {...props} />
+          <Layout className="pl-3 rtl:pr-3 rtl:pl-0 !overflow-y-auto">
+            <Breadcrumb
+              items={[{ title: "Home" }, { title: "List" }, { title: "App" }]}
+              style={{ margin: "16px 0" }}
+            />
+            <Content>
+              <div className="flex flex-col"></div>
+              <Outlet />
+            </Content>
+            <Footer>Footer</Footer>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </AuthorizedWrapper>
   );
 };

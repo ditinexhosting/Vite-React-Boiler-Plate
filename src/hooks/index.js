@@ -5,6 +5,7 @@
  * And export them from index so that it can be imported directly
  */
 
-export * from './useErrorLog';
-export * from './useTheme';
-export * from './useWindowDimensions';
+export * from "./useErrorLog";
+export * from "./useTheme";
+export * from "./useWindowDimensions";
+export * from "./tanstackQueries";

@@ -3,14 +3,14 @@
  * Updated On : August 28, 2024
  * Create session reducer of Redux
  */
-import { createSlice } from '@reduxjs/toolkit';
-import { THEMES } from 'src/utils';
-import { CONFIG } from 'src/config';
+import { createSlice } from "@reduxjs/toolkit";
+import { THEMES } from "src/utils";
+import { CONFIG } from "src/config";
 
 const initialState = { themeMode: THEMES.SYSTEM };
 
 const themeData = createSlice({
-  name: 'theme',
+  name: "theme",
   initialState: initialState,
   reducers: {
     setThemeMode: (state, action) => {

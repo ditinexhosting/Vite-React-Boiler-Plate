@@ -14,7 +14,10 @@ export const ANTD_THEME_LIGHT = {
 
 export const ANTD_THEME_DARK = {
   token: { controlHeight: 40, colorPrimary: "#cb791f" },
-  components: { Layout: { headerBg: "transparent", siderBg: "#23292F", bodyBg: "#23292F" } }
+  components: {
+    Layout: { headerBg: "transparent", siderBg: "#23292F", bodyBg: "#23292F" },
+    Menu: { colorBgContainer: "#000000" }
+  }
 };
 
 export const THEMES = { LIGHT: "light", DARK: "dark", SYSTEM: "system" };

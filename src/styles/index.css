@@ -22,8 +22,8 @@
   --color-muted: #9d9d9f;
   --theme-background: linear-gradient(135deg, #cb791f 0%, #f9d0a2 100%);
   --color-sidebar-collapse-icon: #ccd0ce;
-  --color-sidebar-bg: #f5f5f5;
-  --color-sidebar-footer: rgba(0, 0, 0, 0.06);
+  --color-sidebar-bg: #000000;
+  --color-sidebar-footer: rgba(255, 255, 255, 0.06);
 }
 
 @layer utilities {

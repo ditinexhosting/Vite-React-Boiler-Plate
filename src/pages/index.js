@@ -6,5 +6,5 @@
  * And smaller section / page specific components to it's respective sub folder.
  * And export them from index so that it can be imported directly
  */
-export * from './Login';
-export * from './Dashboard';
+export * from "./Login";
+export * from "./Dashboard";

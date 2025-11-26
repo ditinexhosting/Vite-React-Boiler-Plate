@@ -16,6 +16,7 @@ import {
 } from "react-router";
 import { DashboardContainer } from "src/components";
 import * as Pages from "src/pages";
+import { ROUTES, USER_PERMISSIONS } from "src/utils";
 
 const Navigation = () => {
   const { allowedPermissions } = useSelector((state) => state.permission);
@@ -34,11 +35,18 @@ const Navigation = () => {
             />
           }
         >
-          <Route index element={<Pages.Dashboard />} />
           <Route
-            path="settings"
+            index
             element={
-              <RequireAuth permission={[]}>
+              <RequireAuth permission={USER_PERMISSIONS.TAB_DASHBOARD_HOME_VIEW}>
+                <Pages.Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="event-request"
+            element={
+              <RequireAuth permission={USER_PERMISSIONS.TAB_EVENT_VIEW}>
                 <Pages.Dashboard />
               </RequireAuth>
             }
@@ -59,15 +67,20 @@ const Forbidden = () => {
   return <h1>403 Forbidden. You dont have access to this page.</h1>;
 };
 
+/**
+ * Router Middleware to check if user is logged in and has permission to access the page
+ * @param {*} permission
+ * @returns
+ */
 const RequireAuth = ({ permission, ...props }) => {
   const location = useLocation();
-  let navigate = useNavigate();
   const { userSession } = useSelector((state) => state.session);
+  const { allowedPermissions } = useSelector((state) => state.permission);
 
   if (userSession == null)
     // Redux persist loaded but no user session found. Redirect to login page.
-    return <Navigate to="/" state={{ from: location }} />;
-  else if (!userSession?.permissions.includes(permission))
+    return <Navigate to={ROUTES.LOGIN} state={{ from: location }} />;
+  else if (allowedPermissions && !allowedPermissions?.includes(permission))
     // User don't have access
     return <Forbidden />;
   else return props.children; // Session present

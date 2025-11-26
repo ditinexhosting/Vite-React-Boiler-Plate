@@ -3,12 +3,12 @@
  * Updated On : August 28, 2024
  * Custom ErrorLog hook to handle UI errors in prod
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export const useErrorLog = (fileLocation) => {
   //-------------- State & Variables --------------//
 
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState("");
 
   //-------------- Use Effects --------------//
 
@@ -24,11 +24,11 @@ export const useErrorLog = (fileLocation) => {
    */
   const handleError = (error) => {
     const errorLogString = `Date: ${new Date()} \nFile: ${file} \nError: ${error.message}`;
-    console.error('------------------------');
+    console.error("------------------------");
     console.error(errorLogString);
-    console.error('**** Stack Trace ****');
+    console.error("**** Stack Trace ****");
     console.error(error.stack);
-    console.error('------------------------');
+    console.error("------------------------");
   };
 
   return handleError;

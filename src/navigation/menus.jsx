@@ -37,8 +37,8 @@ export const SIDEBAR_MAIN_MENU = [
     route: ROUTES.TAB_DASHBOARD_CALENDER,
     permission: USER_PERMISSIONS.TAB_CALENDER_VIEW
   },
-  { key: "4", icon: <PieChartOutlined />, label: "Option 1", permission: null },
-  { key: "5", icon: <DesktopOutlined />, label: "Option 2", permission: null },
+  { key: "4", icon: <PieChartOutlined />, label: "Option 1", permission: "NOSHOW" },
+  { key: "5", icon: <DesktopOutlined />, label: "Option 2", permission: "NOSHOW" },
   { key: "6", icon: <ContainerOutlined />, label: "Option 3", permission: null },
   { key: "7", icon: <PieChartOutlined />, label: "Option 1", permission: null },
   {
@@ -77,4 +77,9 @@ export const SIDEBAR_MAIN_MENU = [
 /**
  * Sidebar Profile Action Menu
  */
-export const SIDEBAR_PROFILE_ACTION_MENU = [];
+export const SIDEBAR_PROFILE_ACTION_MENU = [
+  { key: "1", label: "My Account", permission: null },
+  { key: "2", label: "Settings", permission: null },
+  { type: "divider" },
+  { key: "logout", label: "Logout", icon: <LogoutOutlined />, danger: true }
+];

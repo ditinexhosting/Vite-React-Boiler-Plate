@@ -3,7 +3,7 @@
  * Updated On : August 29, 2024
  * APIs related to Authentication
  */
-import { axiosApi, responseHandler } from 'src/services/core';
+import { axiosApi, responseHandler } from "src/services/core";
 
 export const AuthApi = {
   /**
@@ -14,7 +14,7 @@ export const AuthApi = {
    * @returns {json|null} json response or null.
    */
   Login: (data, toast_success = false, toast_loading = false) => {
-    const api_call = axiosApi.post('/api/login/', data);
+    const api_call = axiosApi.post("/api/login/", data);
     return responseHandler(api_call, toast_success, toast_loading);
   },
   /**
@@ -25,7 +25,7 @@ export const AuthApi = {
    * @returns {json|null} json response or null.
    */
   SignUp: (data, toast_success = false, toast_loading = false) => {
-    const api_call = axiosApi.post('/api/register/', data);
+    const api_call = axiosApi.post("/api/register/", data);
     return responseHandler(api_call, toast_success, toast_loading);
-  },
+  }
 };

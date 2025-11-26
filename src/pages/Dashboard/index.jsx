@@ -16,18 +16,14 @@ import {
   Switch,
   Layout,
   Breadcrumb
-} from 'antd';
+} from "antd";
 const { Header, Footer, Sider, Content } = Layout;
-import { useDispatch, useSelector } from 'react-redux';
-import { useTheme } from 'src/hooks';
-import { setThemeMode } from 'src/redux/action';
-import { THEMES } from 'src/utils';
-import { DashboardContainer } from 'src/components';
+import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "src/hooks";
+import { setThemeMode } from "src/redux/action";
+import { THEMES } from "src/utils";
+import { DashboardContainer } from "src/components";
 
 export const Dashboard = () => {
-
-
-  return <div>
-    Dashboard Page
-  </div>;
+  return <div>Dashboard Page</div>;
 };

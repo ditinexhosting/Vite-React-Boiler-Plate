@@ -3,17 +3,17 @@
  * Updated On : August 28, 2024
  * Create session reducer of Redux
  */
-import { createSlice } from '@reduxjs/toolkit';
-import { CONFIG } from 'src/config';
+import { createSlice } from "@reduxjs/toolkit";
+import { CONFIG } from "src/config";
 
 const initialState = { userSession: null, isLoading: false };
 
 const sessionData = createSlice({
-  name: 'session',
+  name: "session",
   initialState: initialState,
   reducers: {
     loadingStart: (state, action) => {
-      state.isLoading = action.payload || 'screen';
+      state.isLoading = action.payload || "screen";
     },
     loadingStop: (state) => {
       state.isLoading = false;

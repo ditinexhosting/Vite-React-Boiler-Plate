@@ -33,28 +33,10 @@ import { Outlet, useLocation, useNavigate } from "react-router";
 import { EllipsisVertical, Moon, Sun } from "lucide-react";
 import { CircleChevronLeft, CircleChevronRight, Sidebar } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  DownOutlined,
-  LogoutOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  SettingOutlined
-} from "@ant-design/icons";
 import UserProfile from "src/assets/images/user.jpg";
-import { SIDEBAR_MAIN_MENU } from "src/navigation/menus";
+import { SIDEBAR_MAIN_MENU, SIDEBAR_PROFILE_ACTION_MENU } from "src/navigation/menus";
 import { filterTabPermission } from "src/utils";
-
-const itemsSecondary = [
-  { key: "2", label: "My Account" },
-  { key: "4", label: "Settings" },
-  { type: "divider" },
-  { key: "5", label: "Logout", icon: <LogoutOutlined />, danger: true }
-];
+import { CONFIG } from "src/config";
 
 export const SidebarComponent = ({
   allowedPermissions = [],
@@ -62,11 +44,11 @@ export const SidebarComponent = ({
 }) => {
   //-------------- State & Variables --------------//
   const { transcript, activeLanguage, isRTL } = useSelector((state) => state.language);
+  const { userSession } = useSelector((state) => state.session);
   const [collapsed, setCollapsed] = useState(false);
   const { token } = useToken();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(">>>allowedPermissions", allowedPermissions);
 
   //-------------- Use Effects --------------//
 
@@ -84,7 +66,12 @@ export const SidebarComponent = ({
    * On click of items from sidebar footer
    * @param {*} item
    */
-  const onSidebarFooterActionClick = (item) => {};
+  const onSidebarFooterActionClick = (item) => {
+    if (item.key === "logout") {
+      CONFIG.TRIGGER_LOGOUT();
+    }
+    navigate(item?.route ?? null);
+  };
 
   /**
    * On click of items from sidebar main menu
@@ -139,8 +126,8 @@ export const SidebarComponent = ({
             />
           </div>
           <div className="flex flex-col truncate">
-            <span className="truncate font-medium block">Admin</span>
-            <span className="text-muted truncate text-xs block">superadmin@company.com</span>
+            <span className="truncate font-medium block">{userSession?.name}</span>
+            <span className="text-muted truncate text-xs block">{userSession?.email}</span>
           </div>
         </div>
         <Divider size="small" className="m-0!" />
@@ -170,10 +157,23 @@ export const SidebarComponent = ({
     );
   };
 
-  const filteredMainMenu = useMemo(
-    () => filterTabPermission(SIDEBAR_MAIN_MENU, Object.values(allowedPermissions)),
-    [allowedPermissions]
-  );
+  /**
+   * Filtered Menu after permission check
+   */
+  const filteredMainMenu = useMemo(() => {
+    if (filterSidebarMenuByPermission)
+      return filterTabPermission(SIDEBAR_MAIN_MENU, Object.values(allowedPermissions));
+    else return SIDEBAR_MAIN_MENU;
+  }, [allowedPermissions]);
+
+  /**
+   * Filtered Action menu after permission check
+   */
+  const filteredProfileActionMenu = useMemo(() => {
+    if (filterSidebarMenuByPermission)
+      return filterTabPermission(SIDEBAR_PROFILE_ACTION_MENU, Object.values(allowedPermissions));
+    else return SIDEBAR_PROFILE_ACTION_MENU;
+  }, [allowedPermissions]);
 
   return (
     <Sider width="15%" trigger={null} collapsible collapsed={collapsed}>
@@ -194,14 +194,16 @@ export const SidebarComponent = ({
           <div className="bg-sidebar-footer gap-3 flex flex-row items-center justify-center p-3">
             {grayscaleProfilePicRenderer(true)}
             <div className={`flex flex-col truncate ${collapsed && "hidden"}`}>
-              <span className="truncate font-medium block">Admin</span>
-              <span className="text-muted truncate text-xs block">superadmin@company.com</span>
+              <span className="truncate font-medium block text-black dark:text-white">
+                {userSession?.name}
+              </span>
+              <span className="text-muted truncate text-xs block">{userSession?.email}</span>
             </div>
             <Dropdown
               trigger={["click"]}
               popupRender={customProfileActionPopupRender}
               menu={{
-                items: itemsSecondary,
+                items: filteredProfileActionMenu,
                 onClick: onSidebarFooterActionClick,
                 mode: "vertical",
                 inlineCollapsed: false
@@ -210,7 +212,7 @@ export const SidebarComponent = ({
               {collapsed ? (
                 grayscaleProfilePicRenderer()
               ) : (
-                <span className="text-3xl">
+                <span className="text-3xl text-black dark:text-white">
                   <EllipsisVertical className="cursor-pointer" />
                 </span>
               )}
