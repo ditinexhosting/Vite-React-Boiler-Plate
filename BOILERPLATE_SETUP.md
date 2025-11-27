@@ -51,3 +51,4 @@
 - Add 404 , 403 proper pages
 - Fix Breadcrumb and Footer template
 - Set Dashboard container footer
+- Setup husky
