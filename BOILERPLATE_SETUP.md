@@ -36,6 +36,14 @@
 
 - Use Tanstack Query, use the existing related hooks for cache mechanism and trigger invalidate cache
 
+### Disable Dark Mode
+
+- Modify useTheme hook and set `const systemTheme = THEMES.LIGHT` also hide any button to change to dark mode
+
+### Stylings
+
+- For styling in tailwind use styles/index.css and for antd theme use utils/constants/antdTheme.js
+
 ### TODO
 
 - Set Error boundary
