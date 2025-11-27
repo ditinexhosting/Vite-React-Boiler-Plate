@@ -58,8 +58,12 @@ export const SidebarComponent = ({
    * On click of items from sidebar footer
    */
   const getCurrentlySelectedMenu = () => {
-    const menuItem = findItemByRoute(SIDEBAR_MAIN_MENU, pathname);
-    return menuItem.keyPath;
+    try {
+      const menuItem = findItemByRoute(SIDEBAR_MAIN_MENU, pathname);
+      return menuItem.keyPath;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   /**

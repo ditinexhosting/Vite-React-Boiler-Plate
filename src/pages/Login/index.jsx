@@ -70,9 +70,9 @@ export const Login = () => {
             variant="outline"
             onClick={onGoogleAuth}
             className="w-full h-12 text-base font-medium text-primary! hover:text-primary/50! rounded-full transition-all duration-200 shadow-sm border-primary! hover:border-primary/50!"
-            disabled={isLoading}
+            disabled={isLoading == "login-google-icon"}
           >
-            {isLoading ? (
+            {isLoading == "login-google-icon" ? (
               <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
             ) : (
               <GoogleIcon />
